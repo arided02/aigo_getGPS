@@ -10,8 +10,7 @@ save the aigo_web-getgps.sh in /usr/local/bin
     git clone 
     cd aigo_getGPS
     sudo cp aigo_web-getgps.sh /usr/local/bin
-Continual copy eqmodgui.cfg file
-    cp -f eqmodgui.cfg ~/.config/eqmodegui/
+
     
 After all ready, user can use mobile phone to connect astrophography Pi, here I use AiGO to connect
   http://192.168.11.254
