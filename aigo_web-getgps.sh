@@ -18,7 +18,7 @@ chown aigo.aigo $GPSFILE
 chmod 644 $GPSFILE
 ## update kstarsrc by tls 211030 ###
 #backup
-cp $KSTARSCFGDIR/kstarsrc_test $KSTARSCFGDIR/kstarsrc.aigobak
+cp $KSTARSCFGDIR/kstarsrc $KSTARSCFGDIR/kstarsrc.aigobak
 KSLAT=`awk '/Latitude=/{print $1}' $KSTARSCFGDIR/kstarsrc`
 KSLON=`awk '/Longitude=/{print $1}' $KSTARSCFGDIR/kstarsrc`
 KSALT=`awk '/Elevation=/{print $1}' $KSTARSCFGDIR/kstarsrc`
@@ -38,7 +38,7 @@ echo $KSLARPL ,$KSLORPL,$KSTZRPL,$KSALRPL
 sed -i $KSLARPL $KSTARSCFGDIR/kstarsrc
 sed -i $KSLORPL $KSTARSCFGDIR/kstarsrc
 sed -i $KSALRPL $KSTARSCFGDIR/kstarsrc
-#sed -i $KSTZRPL $KSTARSCFGDIR/kstarsrc #giveup timezone !_! for +08 vs 8 imcompatible...
+sed -i $KSTZRPL $KSTARSCFGDIR/kstarsrc #temperal rls...211031...
 
 #### eqmod cfg ####
 #backup cfg file
@@ -48,9 +48,9 @@ EQLAT=`awk '/Latitude=/{print $2}' $EQMODCFGDIR/eqmodgui.cfg`
 EQLON=`awk '/Longitude=/{print $5}' $EQMODCFGDIR/eqmodgui.cfg`
 EQALT=`awk '/Elevation=/{print $4}' $EQMODCFGDIR/eqmodgui.cfg`
 echo $SYNCLOC, $EQLAT, $EQLON, $EQALT
-printf -v EQLATRPL "s/%s/Latitude=\"%s\"/1" $EQLAT $2
-printf -v EQLONRPL "s/%s/Longitude=\"%s\"/1" $EQLON $1
-printf -v EQALTRPL "s/%s/Elevation=\"%s\"/1" $EQALT $3
+printf -v EQLATRPL "s|%s|Latitude=\"%s\"|1" $EQLAT $2
+printf -v EQLONRPL "s|%s|Longitude=\"%s\"|1" $EQLON $1   ##update sed separator from / to | in html format cfg file.
+printf -v EQALTRPL "s|%s|Elevation=\"%s\"|1" $EQALT $3
 echo $EQLATRPL, $EQLONRPL, $EQALTRPL
 sed -i $EQLATRPL $EQMODCFGDIR/eqmodgui.cfg
 sed -i $EQLONRPL $EQMODCFGDIR/eqmodgui.cfg
