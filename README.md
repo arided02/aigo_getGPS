@@ -7,7 +7,7 @@ Before install, user need to install
 Upload web sync files to /var/www/html
 save the aigo_web-getgps.sh in /usr/local/bin
     cd ~/Download
-    git clone 
+    git clone https://github.com/arided02/aigo_getGPS.git
     cd aigo_getGPS
     sudo cp aigo_web-getgps.sh /usr/local/bin
 
