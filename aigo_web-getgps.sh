@@ -1,6 +1,8 @@
 #!/bin/bash
 KSTARSCFGDIR=/home/aigo/.config/
 EQMODCFGDIR=/home/aigo/.config/eqmodgui
+SKYCHARTCFGDIR=/home/aigo/.skychart
+
 LON=$1
 LAT=$2
 ALT=$3
@@ -55,4 +57,22 @@ echo $EQLATRPL, $EQLONRPL, $EQALTRPL
 sed -i $EQLATRPL $EQMODCFGDIR/eqmodgui.cfg
 sed -i $EQLONRPL $EQMODCFGDIR/eqmodgui.cfg
 sed -i $EQALTRPL $EQMODCFGDIR/eqmodgui.cfg
+
+### skychart location cfg ###
+#backup ini file
+cp $SKYCHARTCFGDIR/skychart.ini $SKYCHARTCFGDIR/skychart.ini.aigobak
+SKLAT=`awk '/ObsLatitude=/{print $1}' $SKYCHARTCFGDIR/skychart.ini`
+SKLON=`awk '/ObsLongitude=/{print $1}' $SKYCHARTCFGDIR/skychart.ini`
+SKALT=`awk '/ObsAltitude=/{print $1}' $SKYCHARTCFGDIR/skychart.ini`
+echo $SKLAT, $SKLON, $SKALT
+SKLONNEG=$(echo "-1.0 * $1" | bc) ##change to neg sign in E is negative in carte du ciel skychart
+#SKLONNEG=`expr -1.0 \* $1 |bc`
+echo "skycharti negative longitude", $SKLONNEG
+printf -v SKLATRPL "s|%s|ObsLatitude=%s|1" $SKLAT $2
+printf -v SKLONRPL "s|%s|ObsLongitude=%s|1" $SKLON $SKLONNEG
+printf -v SKALTRPL "s|%s|ObsAltitude=%s|1" $SKALT $3
+echo $SKLATRPL, $SKLONRPL, $SKALTRPL
+sed -i $SKLATRPL $SKYCHARTCFGDIR/skychart.ini
+sed -i $SKLONRPL $SKYCHARTCFGDIR/skychart.ini
+sed -i $SKALTRPL $SKYCHARTCFGDIR/skychart.ini
 
